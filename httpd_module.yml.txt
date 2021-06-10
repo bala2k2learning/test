@@ -1,0 +1,25 @@
+---
+-  hosts:  webservers
+
+   tasks:
+   -  name: Ensusre the httpd removed
+      yum:
+        name: httpd
+        state: latest
+
+
+   -  name: Ensure the crond/firewalld service is started
+
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: no
+      with_items:
+      - crond
+      - firewalld
+      - httpd
+
+#   -  name: Ensure the firewalld service is stopped
+#      service:
+#        name: firewalld
+#        state: stopped
