@@ -16,27 +16,16 @@
       yum:
         name: httpd
         state: latest
- 
-   -  name: Update index.html 
-      copy:
-       src: index.html
-       dest: /var/www/html/
-      notify:
-      -  Restart apache
-   
-   handlers:
-   -  name: Restart apache
-      service:
-       name: httpd
-       state: restarted
- 
-   -  name: Ensure the crond service is restarted
+        
+        
+   -  name: Ensure the crond/httpd service is started
       service:
         name: "{{ item }}"
-        state: restarted
+        state: started
         enabled: yes
       with_items:
       - crond
+      - httpd
 
    -  name: Ensure Firewalld is stopped      
       service:
